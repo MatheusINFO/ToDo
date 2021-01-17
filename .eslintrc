@@ -5,6 +5,11 @@
     },
     "rules": {
         "@typescript-eslint/consistent-type-definitions": "off",
-        "@typescript-eslint/no-redeclare": "off"
+        "@typescript-eslint/strict-boolean-expressions": "off",
+        "@typescript-eslint/method-signature-style": "off",
+        "@typescript-eslint/return-await": "off",
+        "@typescript-eslint/comma-spacing": "off",
+        "@typescript-eslint/no-redeclare": "off",
+        "@typescript-eslint/no-misused-promises": "off"
     }
 }
