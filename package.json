@@ -4,9 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "jest --passWithNoTests --silent --noStackTrace",
+    "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage",
-    "test:verbose": "jest --passWithNoTests",
+    "test:verbose": "jest --passWithNoTests --runInBand",
     "test:staged": "npm test -- --findRelatedTests",
     "test:unit": "npm test -- --watch -c jest-unit-config.js",
     "test:integration": "npm test -- --watch -c jest-integration-config.js"
@@ -44,6 +44,7 @@
     "@types/faker": "^5.1.5",
     "bcrypt": "^5.0.0",
     "express": "^4.17.1",
+    "fast-glob": "^3.2.5",
     "mongodb": "^3.6.3",
     "sucrase": "^3.17.0",
     "validator": "^13.5.2"
