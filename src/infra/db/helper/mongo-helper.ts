@@ -18,11 +18,6 @@ export const MongoHelper = {
     return this.client.db().collection(collectionName)
   },
 
-  async clean (collectionName: string) {
-    const collection = MongoHelper.getCollection(collectionName)
-    await collection.deleteMany()
-  },
-
   map (collection: any): any {
     const { _id, ...collectionWithoutId } = collection
     return Object.assign({}, collectionWithoutId, { id: _id })
