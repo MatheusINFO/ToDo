@@ -1,2 +1,6 @@
 export * from './encrypter'
 export * from './add-account-repository'
+export * from './load-account-by-email-repository'
+export * from './hash-comparer'
+export * from './token-generator'
+export * from './update-access-token-repository'
