@@ -3,13 +3,13 @@ import { LoginController } from './login-controller'
 import { InvalidParamError, MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, success, unauthorized } from '@/presentation/helpers'
 import { EmailValidator } from '@/presentation/protocols'
-import { Authentication } from '@/domain/usecases'
+import { Authentication, AuthenticationModel } from '@/domain/usecases'
 
 let email: any, password: any, token: any
 
 const mockAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {
-    async auth (email: string, password: string): Promise<string> {
+    async auth (authentication: AuthenticationModel): Promise<string> {
       return token
     }
   }
@@ -122,7 +122,7 @@ describe('', () => {
       }
     }
     await sut.handle(httpRequest)
-    expect(authenticationSpy).toHaveBeenCalledWith(email, password)
+    expect(authenticationSpy).toHaveBeenCalledWith({ email, password })
   })
 
   it('Should return 401 if a invalid credentials provided', async () => {
