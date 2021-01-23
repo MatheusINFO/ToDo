@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { SignUpController } from './singup'
+import { SignUpController } from './singup-controller'
 import { EmailValidator } from '@/presentation/protocols'
 import { InvalidParamError, MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, success } from '@/presentation/helpers'
