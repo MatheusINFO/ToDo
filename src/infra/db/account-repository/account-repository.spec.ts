@@ -17,7 +17,7 @@ describe('AccountRepository', () => {
     password = faker.internet.password()
     token = faker.random.uuid()
     accountCollection = await MongoHelper.getCollection('accounts')
-    await accountCollection.deleteMany({})
+    await MongoHelper.clean('accounts')
   })
 
   beforeAll(async () => {

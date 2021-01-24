@@ -24,7 +24,7 @@ describe('Token Generator', () => {
     const sut = makeSut()
     const signSpy = jest.spyOn(jwt, 'sign')
     await sut.generate(id)
-    expect(signSpy).toHaveBeenCalledWith(id, 'secret')
+    expect(signSpy).toHaveBeenCalledWith({ id }, 'secret')
   })
 
   it('Should return a token on success', async () => {

@@ -28,6 +28,7 @@ export class LoginController implements Controller {
       }
       return success({ accessToken })
     } catch (error) {
+      console.log(error)
       return serverError()
     }
   }
