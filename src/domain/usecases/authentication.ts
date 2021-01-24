@@ -1,8 +1,10 @@
-export interface AuthenticationModel {
-  email: string
-  password: string
+export interface Authentication {
+  auth (authentication: Authentication.Params): Promise<string>
 }
 
-export interface Authentication {
-  auth (authentication: AuthenticationModel): Promise<string>
+export namespace Authentication {
+  export type Params = {
+    email: string
+    password: string
+  }
 }
