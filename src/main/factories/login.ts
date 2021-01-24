@@ -1,8 +1,7 @@
 import env from '@/main/config/env'
 import { LoginController } from '@/presentation/controller/login/login-controller'
 import { DbAuthentication } from '@/data/usecases/authentication/db-authentication'
-import { JwtAdapter } from '@/infra/cryptography/jwt-adapter/jwt-adapter'
-import { BcryptAdapter } from '@/infra/cryptography'
+import { BcryptAdapter, JwtAdapter } from '@/infra/cryptography'
 import { EmailValidatorAdapter } from '@/infra/validators'
 import { AccountMongoRepository } from '@/infra/db'
 

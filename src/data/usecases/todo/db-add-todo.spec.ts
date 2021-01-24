@@ -53,9 +53,11 @@ describe('DbAddTodo Usecase', () => {
     const addTodoSpy = jest.spyOn(addTodoRepositoryStub, 'add')
     await sut.add({
       title,
-      description
+      description,
+      date,
+      active
     })
-    expect(addTodoSpy).toHaveBeenCalledWith({ title, description })
+    expect(addTodoSpy).toHaveBeenCalledWith({ title, description, date, active })
   })
 
   it('Shoudl throw if AddTodoRepository throws', async () => {
@@ -63,7 +65,9 @@ describe('DbAddTodo Usecase', () => {
     jest.spyOn(addTodoRepositoryStub, 'add').mockImplementationOnce(() => { throw new Error() })
     const httpResponse = sut.add({
       title,
-      description
+      description,
+      date,
+      active
     })
     await expect(httpResponse).rejects.toThrow()
   })
@@ -72,7 +76,9 @@ describe('DbAddTodo Usecase', () => {
     const { sut } = makeSut()
     const httpResponse = await sut.add({
       title,
-      description
+      description,
+      date,
+      active
     })
     expect(httpResponse).toEqual(mockTodo())
   })

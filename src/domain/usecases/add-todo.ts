@@ -5,10 +5,7 @@ export interface AddTodo {
 }
 
 export namespace AddTodo {
-  export type Params = {
-    title: string
-    description: string
-  }
+  export type Params = Omit<Todo, 'id'>
 
   export type Result = Todo
 }
