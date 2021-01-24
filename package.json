@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "dev": "sucrase-node src/main/server.ts",
     "test": "jest --passWithNoTests --silent --noStackTrace --runInBand",
     "test:ci": "npm test -- --coverage",
     "test:verbose": "jest --passWithNoTests --runInBand",
@@ -47,8 +48,12 @@
     "express": "^4.17.1",
     "fast-glob": "^3.2.5",
     "jsonwebtoken": "^8.5.1",
+    "module-alias": "^2.2.2",
     "mongodb": "^3.6.3",
     "sucrase": "^3.17.0",
     "validator": "^13.5.2"
+  },
+  "_moduleAliases": {
+    "@": "src"
   }
 }
