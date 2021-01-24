@@ -42,14 +42,14 @@ const makeSut = (): SutTypes => {
   }
 }
 
-describe('', () => {
-  beforeAll(() => {
+describe('Login Controller', () => {
+  beforeEach(() => {
     email = faker.internet.email()
     password = faker.internet.password()
     token = faker.random.uuid()
   })
 
-  it('Should return 400 is no email is provided', async () => {
+  it('Should return 400 if no email is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {
@@ -60,7 +60,7 @@ describe('', () => {
     expect(httpResponse).toEqual(badRequest(new MissingParamError('email')))
   })
 
-  it('Should return 400 is no password is provided', async () => {
+  it('Should return 400 if no password is provided', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {

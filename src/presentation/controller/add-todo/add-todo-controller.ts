@@ -1,0 +1,31 @@
+import { AddTodo } from '@/domain/usecases'
+import { MissingParamError } from '@/presentation/errors'
+import { badRequest, serverError, success } from '@/presentation/helpers'
+import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
+
+export class AddTodoController implements Controller {
+  constructor (
+    private readonly addTodo: AddTodo
+  ) {}
+
+  async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
+    try {
+      const requiredFields = ['title', 'description']
+      for (const field of requiredFields) {
+        if (!httpRequest.body[field]) {
+          return badRequest(new MissingParamError(field))
+        }
+      }
+      const { title, description } = httpRequest.body
+      const data = await this.addTodo.add({
+        title,
+        description,
+        date: new Date(),
+        active: true
+      })
+      return success(data)
+    } catch (error) {
+      return serverError()
+    }
+  }
+}

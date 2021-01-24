@@ -1,7 +1,7 @@
 import faker from 'faker'
 import request from 'supertest'
 import app from '@/main/config/app'
-import { MongoHelper } from '@/infra/db/helper'
+import { MongoHelper } from '@/infra/db'
 
 let name: any, email: any, password: any, passwordConfirmation: any
 

@@ -3,7 +3,7 @@ import { hash } from 'bcrypt'
 import request from 'supertest'
 import { Collection } from 'mongodb'
 import app from '@/main/config/app'
-import { MongoHelper } from '@/infra/db/helper'
+import { MongoHelper } from '@/infra/db'
 
 let name: any, email: any, password: any
 let accountCollection: Collection
