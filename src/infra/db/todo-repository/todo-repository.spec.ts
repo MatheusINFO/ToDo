@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { MongoHelper } from '../helper/mongo-helper'
 import { TodoMongoRepository } from './todo-repository'
+import { MongoHelper } from '@/infra/db'
 
 let title: any, description: any, date: Date, active: boolean
 

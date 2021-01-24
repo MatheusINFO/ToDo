@@ -1,6 +1,6 @@
 import { AddTodoRepository } from '@/data/protocols'
 import { AddTodo } from '@/domain/usecases'
-import { MongoHelper } from '../helper/mongo-helper'
+import { MongoHelper } from '@/infra/db'
 
 export class TodoMongoRepository implements AddTodoRepository {
   async add (todo: AddTodo.Params): Promise<AddTodo.Result> {
