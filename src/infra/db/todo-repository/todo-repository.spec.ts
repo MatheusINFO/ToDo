@@ -1,8 +1,10 @@
 import faker from 'faker'
 import { TodoMongoRepository } from './todo-repository'
 import { MongoHelper } from '@/infra/db'
+import { Collection } from 'mongodb'
 
 let title: any, description: any, date: Date, active: boolean
+let todoCollection: Collection
 
 const makeSut = (): TodoMongoRepository => {
   return new TodoMongoRepository()
@@ -14,6 +16,8 @@ describe('TodoRepository', () => {
     description = faker.random.words()
     date = faker.date.recent()
     active = faker.random.boolean()
+    todoCollection = await MongoHelper.getCollection('todos')
+    await MongoHelper.clean('todos')
   })
 
   beforeAll(async () => {
@@ -39,6 +43,32 @@ describe('TodoRepository', () => {
       expect(todo.description).toBe(description)
       expect(todo.date).toBe(date)
       expect(todo.active).toBe(active)
+    })
+  })
+
+  describe('loadAll()', () => {
+    it('Should return all todos on success', async () => {
+      await todoCollection.insertMany([{
+        title,
+        description,
+        date,
+        active
+      },{
+        title,
+        description,
+        date,
+        active
+      }])
+      const sut = makeSut()
+      const todo = await sut.loadAll()
+      expect(todo.length).toBe(2)
+      expect(todo[0].id).toBeTruthy()
+      expect(todo[0].title).toBe(title)
+      expect(todo[0].description).toBe(description)
+      expect(todo[0].date).toEqual(date)
+      expect(todo[0].active).toBe(active)
+      expect(todo[1].id).toBeTruthy()
+      expect(todo[2]).toBeFalsy()
     })
   })
 })
