@@ -19,7 +19,9 @@ const mockTodo = (): Todo => {
 
 const mockDeleteTodoRepository = (): DeleteTodoRepository => {
   class DeleteTodoRepositoryStub implements DeleteTodoRepository {
-    async delete (id: DeleteTodo.Params): Promise<void> {}
+    async delete (id: DeleteTodo.Params): Promise<DeleteTodo.Result> {
+      return mockTodo()
+    }
   }
   return new DeleteTodoRepositoryStub()
 }
@@ -92,5 +94,11 @@ describe('DbDeleteTodo Usecase', () => {
     jest.spyOn(deleteTodoRepositoryStub, 'delete').mockImplementationOnce(() => { throw new Error() })
     const httpResponse = sut.delete(id)
     await expect(httpResponse).rejects.toThrow()
+  })
+
+  it('Should return a todo on success', async () => {
+    const { sut } = makeSut()
+    const httpResponse = await sut.delete(id)
+    expect(httpResponse).toEqual(mockTodo())
   })
 })

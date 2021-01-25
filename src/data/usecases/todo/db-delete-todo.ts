@@ -8,10 +8,11 @@ export class DbDeleteTodo implements DeleteTodoRepository {
     private readonly deleteTodoRepository: DeleteTodoRepository
   ) {}
 
-  async delete (id: DeleteTodo.Params): Promise<void> {
+  async delete (id: DeleteTodo.Params): Promise<DeleteTodo.Result> {
     const todo = await this.loadTodoByIdRepository.loadById(id)
     if (todo) {
-      await this.deleteTodoRepository.delete(id)
+      const deletedTodo = await this.deleteTodoRepository.delete(id)
+      return deletedTodo
     }
     return null
   }

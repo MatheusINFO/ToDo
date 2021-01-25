@@ -71,4 +71,23 @@ describe('TodoRepository', () => {
       expect(todo[2]).toBeFalsy()
     })
   })
+
+  describe('delete()', () => {
+    it('Should return a deleted todo on success', async () => {
+      const sut = makeSut()
+      const result = await todoCollection.insertOne({
+        title,
+        description,
+        date,
+        active: true
+      })
+      const todo = await sut.delete(result.ops[0]._id)
+      expect(todo).toBeTruthy()
+      expect(todo.id).toBeTruthy()
+      expect(todo.title).toBe(title)
+      expect(todo.description).toBe(description)
+      expect(todo.date).toEqual(date)
+      expect(todo.active).toBe(false)
+    })
+  })
 })
