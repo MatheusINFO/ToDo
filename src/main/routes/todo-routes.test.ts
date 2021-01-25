@@ -20,13 +20,23 @@ describe('Todo Routes', () => {
     await MongoHelper.disconnect()
   })
 
-  it('Should return an todo on success', async () => {
-    await request(app)
-      .post('/api/todo')
-      .send({
-        title,
-        description
-      })
-      .expect(200)
+  describe('POST /todo', () => {
+    it('Should return an todo on success', async () => {
+      await request(app)
+        .post('/api/todo')
+        .send({
+          title,
+          description
+        })
+        .expect(200)
+    })
+  })
+
+  describe('GET /todo', () => {
+    it('Should return a success on get successful', async () => {
+      await request(app)
+        .get('/api/todo')
+        .expect(200)
+    })
   })
 })
