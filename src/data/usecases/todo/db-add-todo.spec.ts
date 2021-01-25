@@ -48,7 +48,7 @@ describe('DbAddTodo Usecase', () => {
     active = faker.random.boolean()
   })
 
-  it('Shoudl call AddTodoRepository with correct password', async () => {
+  it('Should call AddTodoRepository with correct password', async () => {
     const { sut, addTodoRepositoryStub } = makeSut()
     const addTodoSpy = jest.spyOn(addTodoRepositoryStub, 'add')
     await sut.add({
@@ -60,7 +60,7 @@ describe('DbAddTodo Usecase', () => {
     expect(addTodoSpy).toHaveBeenCalledWith({ title, description, date, active })
   })
 
-  it('Shoudl throw if AddTodoRepository throws', async () => {
+  it('Should throw if AddTodoRepository throws', async () => {
     const { sut, addTodoRepositoryStub } = makeSut()
     jest.spyOn(addTodoRepositoryStub, 'add').mockImplementationOnce(() => { throw new Error() })
     const httpResponse = sut.add({
@@ -72,7 +72,7 @@ describe('DbAddTodo Usecase', () => {
     await expect(httpResponse).rejects.toThrow()
   })
 
-  it('Shoudl return an todo on success', async () => {
+  it('Should return an todo on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.add({
       title,
