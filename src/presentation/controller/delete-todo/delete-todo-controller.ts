@@ -10,10 +10,11 @@ export class DeleteTodoController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      if (!httpRequest.body.id) {
+      const { id } = httpRequest.body
+      if (!id) {
         return badRequest(new MissingParamError('id'))
       }
-      const deleteTodo = await this.deleteTodo.delete(httpRequest.body.id)
+      const deleteTodo = await this.deleteTodo.delete(id)
       return success(deleteTodo)
     } catch (error) {
       return serverError()

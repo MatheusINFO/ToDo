@@ -1,7 +1,6 @@
 import faker from 'faker'
 import { DbDeleteTodo } from './db-delete-todo'
 import { Todo } from '@/domain/models'
-import { LoadTodoByIdRepository } from '@/data/protocols'
 import { DeleteTodoRepository } from '@/data/protocols/delete-todo-repository'
 import { DeleteTodo } from '@/domain/usecases/delete-todo'
 
@@ -26,28 +25,16 @@ const mockDeleteTodoRepository = (): DeleteTodoRepository => {
   return new DeleteTodoRepositoryStub()
 }
 
-const mockLoadTodoByIdRepository = (): LoadTodoByIdRepository => {
-  class LoadTodoByIdRepositoryStub implements LoadTodoByIdRepository {
-    async loadById (id: string): Promise<Todo> {
-      return mockTodo()
-    }
-  }
-  return new LoadTodoByIdRepositoryStub()
-}
-
 type SutTypes = {
   sut: DbDeleteTodo
-  loadTodoByIdRepositoryStub: LoadTodoByIdRepository
   deleteTodoRepositoryStub: DeleteTodoRepository
 }
 
 const makeSut = (): SutTypes => {
   const deleteTodoRepositoryStub = mockDeleteTodoRepository()
-  const loadTodoByIdRepositoryStub = mockLoadTodoByIdRepository()
-  const sut = new DbDeleteTodo(loadTodoByIdRepositoryStub, deleteTodoRepositoryStub)
+  const sut = new DbDeleteTodo(deleteTodoRepositoryStub)
   return {
     sut,
-    loadTodoByIdRepositoryStub,
     deleteTodoRepositoryStub
   }
 }
@@ -59,27 +46,6 @@ describe('DbDeleteTodo Usecase', () => {
     description = faker.random.words()
     date = faker.date.recent()
     active = faker.random.boolean()
-  })
-
-  it('Should call LoadTodoByIdRepository with correct values', async () => {
-    const { sut, loadTodoByIdRepositoryStub } = makeSut()
-    const loadTodoSpy = jest.spyOn(loadTodoByIdRepositoryStub, 'loadById')
-    await sut.delete(id)
-    expect(loadTodoSpy).toHaveBeenCalledWith(id)
-  })
-
-  it('Should throw if LoadTodoByIdRepository throws', async () => {
-    const { sut, loadTodoByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadTodoByIdRepositoryStub, 'loadById').mockImplementationOnce(() => { throw new Error() })
-    const httpResponse = sut.delete(id)
-    await expect(httpResponse).rejects.toThrow()
-  })
-
-  it('Should return null if LoadTodoByIdRepository with returns null', async () => {
-    const { sut, loadTodoByIdRepositoryStub } = makeSut()
-    jest.spyOn(loadTodoByIdRepositoryStub, 'loadById').mockReturnValueOnce(null)
-    const httpResponse = await sut.delete(id)
-    expect(httpResponse).toBeNull()
   })
 
   it('Should call DeleteTodoRepository with correct values', async () => {

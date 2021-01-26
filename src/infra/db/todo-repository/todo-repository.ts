@@ -2,6 +2,7 @@ import { AddTodoRepository, LoadTodoRepository , DeleteTodoRepository } from '@/
 import { AddTodo, LoadTodo } from '@/domain/usecases'
 import { DeleteTodo } from '@/domain/usecases/delete-todo'
 import { MongoHelper } from '@/infra/db'
+import { ObjectID } from 'mongodb'
 
 export class TodoMongoRepository implements AddTodoRepository, LoadTodoRepository, DeleteTodoRepository {
   async add (todo: AddTodo.Params): Promise<AddTodo.Result> {
@@ -19,7 +20,7 @@ export class TodoMongoRepository implements AddTodoRepository, LoadTodoRepositor
 
   async delete (id: DeleteTodo.Params): Promise<DeleteTodo.Result> {
     const todoCollection = MongoHelper.getCollection('todos')
-    const { value } = await todoCollection.findOneAndUpdate({ _id: id }, {
+    const { value } = await todoCollection.findOneAndUpdate({ _id: new ObjectID(id) }, {
       $set: {
         active: false
       }
