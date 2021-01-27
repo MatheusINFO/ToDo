@@ -77,4 +77,28 @@ describe('AccountRepository', () => {
       expect(account.accessToken).toBe(token)
     })
   })
+
+  describe('loadByToken()', () => {
+    it('Should return an account on loadByToken', async () => {
+      const sut = makeSut()
+      await accountCollection.insertOne({
+        name,
+        email,
+        password,
+        accessToken: token
+      })
+      const account = await sut.loadByToken(token)
+      expect(account).toBeTruthy()
+      expect(account.id).toBeTruthy()
+      expect(account.name).toBe(name)
+      expect(account.email).toBe(email)
+      expect(account.password).toBe(password)
+    })
+
+    it('Should return null if loadByEmail fails', async () => {
+      const sut = makeSut()
+      const account = await sut.loadByToken(token)
+      expect(account).toBeFalsy()
+    })
+  })
 })

@@ -48,21 +48,21 @@ describe('DbLoadTodo Usecase', () => {
     active = faker.random.boolean()
   })
 
-  it('Shoudl call LoadTodoRepository with correct password', async () => {
+  it('Should call LoadTodoRepository with correct password', async () => {
     const { sut, loadTodoRepository } = makeSut()
     const loadTodoSpy = jest.spyOn(loadTodoRepository, 'loadAll')
     await sut.loadAll()
     expect(loadTodoSpy).toHaveBeenCalled()
   })
 
-  it('Shoudl throw if LoadTodoRepository throws', async () => {
+  it('Should throw if LoadTodoRepository throws', async () => {
     const { sut, loadTodoRepository } = makeSut()
     jest.spyOn(loadTodoRepository, 'loadAll').mockImplementationOnce(() => { throw new Error() })
     const httpResponse = sut.loadAll()
     await expect(httpResponse).rejects.toThrow()
   })
 
-  it('Shoudl return all todos on success', async () => {
+  it('Should return all todos on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.loadAll()
     expect(httpResponse).toEqual(mockListTodo())

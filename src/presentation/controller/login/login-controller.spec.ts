@@ -153,7 +153,7 @@ describe('Login Controller', () => {
     expect(httpResponse).toEqual(serverError())
   })
 
-  it('Shoudl return 200 on success', async () => {
+  it('Should return 200 on success', async () => {
     const { sut } = makeSut()
     const httpRequest = {
       body: {

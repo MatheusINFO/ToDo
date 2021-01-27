@@ -55,7 +55,7 @@ describe('DbAddAccount Usecase', () => {
     password = faker.internet.password()
   })
 
-  it('Shoudl call encrypter with correct password', async () => {
+  it('Should call encrypter with correct password', async () => {
     const { sut, encrypterStub } = makeSut()
     const httpRequest = jest.spyOn(encrypterStub, 'encrypt')
     await sut.add({
@@ -66,7 +66,7 @@ describe('DbAddAccount Usecase', () => {
     expect(httpRequest).toHaveBeenCalledWith(password)
   })
 
-  it('Shoudl throw if encrypter throws', async () => {
+  it('Should throw if encrypter throws', async () => {
     const { sut, encrypterStub } = makeSut()
     jest.spyOn(encrypterStub, 'encrypt').mockImplementation(() => {
       throw new Error()
@@ -79,7 +79,7 @@ describe('DbAddAccount Usecase', () => {
     await expect(httpRequest).rejects.toThrow()
   })
 
-  it('Shoudl call AddAccountRepository with correct password', async () => {
+  it('Should call AddAccountRepository with correct password', async () => {
     const { sut, addAccountRepository } = makeSut()
     const httpRequest = jest.spyOn(addAccountRepository, 'add')
     const accountData = {
@@ -91,7 +91,7 @@ describe('DbAddAccount Usecase', () => {
     expect(httpRequest).toHaveBeenCalledWith(accountData)
   })
 
-  it('Shoudl throw if AddAccountRepository throws', async () => {
+  it('Should throw if AddAccountRepository throws', async () => {
     const { sut, addAccountRepository } = makeSut()
     jest.spyOn(addAccountRepository, 'add').mockImplementation(() => {
       throw new Error()
@@ -105,7 +105,7 @@ describe('DbAddAccount Usecase', () => {
     await expect(httpRequest).rejects.toThrow()
   })
 
-  it('Shoudl return an account on success', async () => {
+  it('Should return an account on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.add({
       name,
