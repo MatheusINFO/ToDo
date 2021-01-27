@@ -1,10 +1,10 @@
 import { Router } from 'express'
 import { adaptRoute } from '@/main/adapter/express-router-adapter'
 import { makeAddTodoController } from '@/main/factories/add-todo'
-import { makeLoadTodoController } from '../factories/load-todo'
-import { makeDeleteTodoController } from '../factories/delete-todo'
-import { adaptMiddleware } from '../adapter/express-middleware-adapter'
-import { makeAuthMiddleware } from '../middlewares/auth'
+import { makeLoadTodoController } from '@/main/factories/load-todo'
+import { makeDeleteTodoController } from '@/main/factories/delete-todo'
+import { adaptMiddleware } from '@/main/adapter/express-middleware-adapter'
+import { makeAuthMiddleware } from '@/main/middlewares/auth'
 
 export default (router: Router): void => {
   const auth = adaptMiddleware(makeAuthMiddleware())

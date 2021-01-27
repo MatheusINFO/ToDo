@@ -1,7 +1,7 @@
 import faker from 'faker'
+import { Collection } from 'mongodb'
 import { TodoMongoRepository } from './todo-repository'
 import { MongoHelper } from '@/infra/db'
-import { Collection } from 'mongodb'
 
 let title: any, description: any, date: Date, active: boolean
 let todoCollection: Collection

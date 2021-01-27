@@ -1,8 +1,7 @@
-import { AddTodoRepository, LoadTodoRepository , DeleteTodoRepository } from '@/data/protocols'
-import { AddTodo, LoadTodo } from '@/domain/usecases'
-import { DeleteTodo } from '@/domain/usecases/delete-todo'
-import { MongoHelper } from '@/infra/db'
 import { ObjectID } from 'mongodb'
+import { AddTodoRepository, LoadTodoRepository , DeleteTodoRepository } from '@/data/protocols'
+import { AddTodo, LoadTodo , DeleteTodo } from '@/domain/usecases'
+import { MongoHelper } from '@/infra/db'
 
 export class TodoMongoRepository implements AddTodoRepository, LoadTodoRepository, DeleteTodoRepository {
   async add (todo: AddTodo.Params): Promise<AddTodo.Result> {

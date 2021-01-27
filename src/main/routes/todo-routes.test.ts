@@ -1,10 +1,10 @@
 import faker from 'faker'
 import request from 'supertest'
-import app from '@/main/config/app'
-import { MongoHelper } from '@/infra/db'
-import env from '../config/env'
 import { sign } from 'jsonwebtoken'
 import { Collection } from 'mongodb'
+import app from '@/main/config/app'
+import env from '@/main/config/env'
+import { MongoHelper } from '@/infra/db'
 
 let title: any, description: any
 let accountCollection: Collection

@@ -2,8 +2,8 @@ import faker from 'faker'
 import { AuthMiddleware } from './auth-middleware'
 import { AccountModel } from '@/domain/models'
 import { LoadAccountByToken } from '@/domain/usecases'
-import { forbidden, serverError, success } from '../helpers'
-import { AccessDeniedError } from '../errors'
+import { forbidden, serverError, success } from '@/presentation/helpers'
+import { AccessDeniedError } from '@/presentation/errors'
 
 let id: any, name: any, email: any, password: any, token: any
 
