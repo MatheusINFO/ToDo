@@ -6,8 +6,8 @@ export class DbLoadTodo implements LoadTodoRepository {
     private readonly loadTodoRepository: LoadTodoRepository
   ) {}
 
-  async loadAll (): Promise<LoadTodo.Result> {
-    const todos = await this.loadTodoRepository.loadAll()
+  async loadAll (accountId: LoadTodo.Params): Promise<LoadTodo.Result> {
+    const todos = await this.loadTodoRepository.loadAll(accountId)
     return todos
   }
 }

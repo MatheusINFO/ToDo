@@ -5,11 +5,12 @@ import { MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, success } from '@/presentation/helpers'
 import { Todo } from '@/domain/models'
 
-let id: any, title: any, description: any, date: Date, active: boolean
+let accountId: any, id: any, title: any, description: any, date: Date, active: boolean
 
 const mockTodo = (): Todo => {
   return {
     id,
+    accountId,
     title,
     description,
     date,
@@ -43,6 +44,7 @@ const makeSut = (): SutTypes => {
 describe('Delete Todo Controller', () => {
   beforeEach(async () => {
     id = faker.random.uuid()
+    accountId = faker.random.uuid()
     title = faker.random.word()
     description = faker.random.words()
     date = faker.date.recent()

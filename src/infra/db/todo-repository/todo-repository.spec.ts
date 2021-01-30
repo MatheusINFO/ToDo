@@ -3,8 +3,9 @@ import { Collection } from 'mongodb'
 import { TodoMongoRepository } from './todo-repository'
 import { MongoHelper } from '@/infra/db'
 
-let title: any, description: any, date: Date, active: boolean
+let accountId: any, title: any, description: any, name: any, email: any, password: any, date: Date, active: boolean
 let todoCollection: Collection
+let accountCollection: Collection
 
 const makeSut = (): TodoMongoRepository => {
   return new TodoMongoRepository()
@@ -12,12 +13,18 @@ const makeSut = (): TodoMongoRepository => {
 
 describe('TodoRepository', () => {
   beforeEach(async () => {
+    accountId = faker.random.uuid()
     title = faker.random.word()
     description = faker.random.words()
+    name = faker.name.findName()
+    email = faker.internet.email()
+    password = faker.internet.password()
     date = faker.date.recent()
     active = faker.random.boolean()
     todoCollection = await MongoHelper.getCollection('todos')
     await MongoHelper.clean('todos')
+    accountCollection = await MongoHelper.getCollection('accounts')
+    await MongoHelper.clean('accounts')
   })
 
   beforeAll(async () => {
@@ -32,6 +39,7 @@ describe('TodoRepository', () => {
     it('Should return an todo on success', async () => {
       const sut = makeSut()
       const todo = await sut.add({
+        accountId,
         title,
         description,
         date,
@@ -48,7 +56,14 @@ describe('TodoRepository', () => {
 
   describe('loadAll()', () => {
     it('Should return all todos on success', async () => {
+      const account = await accountCollection.insertOne({
+        name,
+        email,
+        password
+      })
+      const id = account.ops[0]._id
       await todoCollection.insertMany([{
+        accountId: id,
         title,
         description,
         date,
@@ -60,15 +75,14 @@ describe('TodoRepository', () => {
         active
       }])
       const sut = makeSut()
-      const todo = await sut.loadAll()
-      expect(todo.length).toBe(2)
+      const todo = await sut.loadAll(id)
+      expect(todo.length).toBe(1)
       expect(todo[0].id).toBeTruthy()
       expect(todo[0].title).toBe(title)
       expect(todo[0].description).toBe(description)
       expect(todo[0].date).toEqual(date)
       expect(todo[0].active).toBe(active)
-      expect(todo[1].id).toBeTruthy()
-      expect(todo[2]).toBeFalsy()
+      expect(todo[1]).toBeFalsy()
     })
   })
 

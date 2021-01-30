@@ -4,11 +4,12 @@ import { Todo } from '@/domain/models'
 import { DeleteTodoRepository } from '@/data/protocols/delete-todo-repository'
 import { DeleteTodo } from '@/domain/usecases/delete-todo'
 
-let id: any, title: any, description: any, date: Date, active: boolean
+let id: any, accountId: any, title: any, description: any, date: Date, active: boolean
 
 const mockTodo = (): Todo => {
   return {
     id,
+    accountId,
     title,
     description,
     date,
@@ -42,6 +43,7 @@ const makeSut = (): SutTypes => {
 describe('DbDeleteTodo Usecase', () => {
   beforeEach(() => {
     id = faker.random.uuid()
+    accountId = faker.random.uuid()
     title = faker.random.word()
     description = faker.random.words()
     date = faker.date.recent()

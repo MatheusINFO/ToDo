@@ -4,11 +4,12 @@ import { AddTodoRepository } from '@/data/protocols'
 import { Todo } from '@/domain/models'
 import { AddTodo } from '@/domain/usecases/add-todo'
 
-let id: any, title: any, description: any, date: Date, active: boolean
+let id: any, accountId: any, title: any, description: any, date: Date, active: boolean
 
 const mockTodo = (): Todo => {
   return {
     id,
+    accountId,
     title,
     description,
     date,
@@ -52,6 +53,7 @@ describe('DbAddTodo Usecase', () => {
     const { sut, addTodoRepositoryStub } = makeSut()
     const addTodoSpy = jest.spyOn(addTodoRepositoryStub, 'add')
     await sut.add({
+      accountId,
       title,
       description,
       date,
@@ -64,6 +66,7 @@ describe('DbAddTodo Usecase', () => {
     const { sut, addTodoRepositoryStub } = makeSut()
     jest.spyOn(addTodoRepositoryStub, 'add').mockImplementationOnce(() => { throw new Error() })
     const httpResponse = sut.add({
+      accountId,
       title,
       description,
       date,
@@ -75,6 +78,7 @@ describe('DbAddTodo Usecase', () => {
   it('Should return an todo on success', async () => {
     const { sut } = makeSut()
     const httpResponse = await sut.add({
+      accountId,
       title,
       description,
       date,

@@ -4,11 +4,12 @@ import { LoadTodoRepository } from '@/data/protocols'
 import { Todo } from '@/domain/models'
 import { LoadTodo } from '@/domain/usecases'
 
-let id: any, title: any, description: any, date: Date, active: boolean
+let id: any, accountId: any, title: any, description: any, date: Date, active: boolean
 
 const mockListTodo = (): Todo[] => {
   return [{
     id,
+    accountId,
     title,
     description,
     date,
@@ -18,7 +19,7 @@ const mockListTodo = (): Todo[] => {
 
 const mockLoadTodoRepository = (): LoadTodoRepository => {
   class LoadTodoRepositoryStub implements LoadTodoRepository {
-    async loadAll (): Promise<LoadTodo.Result> {
+    async loadAll (accountId: LoadTodo.Params): Promise<LoadTodo.Result> {
       return mockListTodo()
     }
   }
@@ -51,20 +52,20 @@ describe('DbLoadTodo Usecase', () => {
   it('Should call LoadTodoRepository with correct password', async () => {
     const { sut, loadTodoRepository } = makeSut()
     const loadTodoSpy = jest.spyOn(loadTodoRepository, 'loadAll')
-    await sut.loadAll()
+    await sut.loadAll(accountId)
     expect(loadTodoSpy).toHaveBeenCalled()
   })
 
   it('Should throw if LoadTodoRepository throws', async () => {
     const { sut, loadTodoRepository } = makeSut()
     jest.spyOn(loadTodoRepository, 'loadAll').mockImplementationOnce(() => { throw new Error() })
-    const httpResponse = sut.loadAll()
+    const httpResponse = sut.loadAll(accountId)
     await expect(httpResponse).rejects.toThrow()
   })
 
   it('Should return all todos on success', async () => {
     const { sut } = makeSut()
-    const httpResponse = await sut.loadAll()
+    const httpResponse = await sut.loadAll(accountId)
     expect(httpResponse).toEqual(mockListTodo())
   })
 })

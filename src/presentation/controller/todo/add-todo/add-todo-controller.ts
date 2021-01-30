@@ -17,7 +17,9 @@ export class AddTodoController implements Controller {
         }
       }
       const { title, description } = httpRequest.body
+      const accountId = httpRequest.accountId
       const data = await this.addTodo.add({
+        accountId,
         title,
         description,
         date: new Date(),

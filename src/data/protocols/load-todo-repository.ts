@@ -1,5 +1,5 @@
 import { LoadTodo } from '@/domain/usecases'
 
 export interface LoadTodoRepository {
-  loadAll (): Promise<LoadTodo.Result>
+  loadAll (accountId: LoadTodo.Params): Promise<LoadTodo.Result>
 }

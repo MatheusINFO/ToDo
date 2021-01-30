@@ -9,7 +9,7 @@ export class LoadTodoController implements Controller {
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const todos = await this.loadTodo.loadAll()
+      const todos = await this.loadTodo.loadAll(httpRequest.accountId)
       return success(todos)
     } catch (error) {
       return serverError()

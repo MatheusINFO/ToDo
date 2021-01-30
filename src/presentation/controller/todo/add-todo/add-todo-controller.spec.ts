@@ -5,13 +5,14 @@ import { AddTodo } from '@/domain/usecases'
 import { MissingParamError } from '@/presentation/errors'
 import { badRequest, serverError, success } from '@/presentation/helpers'
 
-let id: any, title: any, description: any
+let id: any, accountId: any, title: any, description: any
 
 const mockAddTodo = (): AddTodo => {
   class AddTodoStub implements AddTodo {
     async add (todo: AddTodo.Params): Promise<AddTodo.Result> {
       return {
         id,
+        accountId,
         title,
         description,
         date: new Date(),
@@ -39,6 +40,7 @@ const makeSut = (): SutTypes => {
 describe('Add Todo Controller', () => {
   beforeEach(async () => {
     id = faker.random.uuid()
+    accountId = faker.random.uuid()
     title = faker.random.word()
     description = faker.random.words()
   })
@@ -112,6 +114,7 @@ describe('Add Todo Controller', () => {
     const httpResponse = await sut.handle(httpRequest)
     expect(httpResponse).toEqual(success({
       id,
+      accountId,
       title,
       description,
       date: new Date(),

@@ -11,9 +11,9 @@ export class TodoMongoRepository implements AddTodoRepository, LoadTodoRepositor
     return MongoHelper.map(todoData)
   }
 
-  async loadAll (): Promise<LoadTodo.Result> {
+  async loadAll (accountId: LoadTodo.Params): Promise<LoadTodo.Result> {
     const todoCollection = MongoHelper.getCollection('todos')
-    const todos = await todoCollection.find().toArray()
+    const todos = await todoCollection.find({ accountId: new ObjectID(accountId) }).toArray()
     return todos && MongoHelper.mapCollection(todos)
   }
 

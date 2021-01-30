@@ -4,11 +4,12 @@ import { LoadTodo } from '@/domain/usecases'
 import { Todo } from '@/domain/models'
 import { serverError, success } from '@/presentation/helpers'
 
-let id: any, title: any, description: any, date: Date, active: boolean
+let id: any, accountId: any, title: any, description: any, date: Date, active: boolean
 
 const mockListTodo = (): Todo[] => {
   return [{
     id,
+    accountId,
     title,
     description,
     date,
@@ -42,6 +43,7 @@ const makeSut = (): SutTypes => {
 describe('Load Todo Controller', () => {
   beforeEach(() => {
     id = faker.random.uuid()
+    accountId = faker.random.uuid()
     title = faker.random.word()
     description = faker.random.words()
     date = faker.date.recent()
