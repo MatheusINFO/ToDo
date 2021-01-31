@@ -2,6 +2,9 @@
 
 ![alt text](./public/img/todo-logo.png "ToDo")
 
+> ## Deploy no heroku:
+* https://clean-todo-api.herokuapp.com/
+
 > ## APIs construídas no treinamento
 
 1. [SignUp]
