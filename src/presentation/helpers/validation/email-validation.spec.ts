@@ -1,6 +1,7 @@
 import faker from 'faker'
 import { EmailValidation } from './email-validation'
 import { EmailValidator } from '@/presentation/protocols'
+import { InvalidParamError } from '@/presentation/errors'
 
 let email: any
 
@@ -48,5 +49,15 @@ describe('EmailValidation', () => {
       throw new Error()
     })
     expect(sut.validate).toThrow()
+  })
+
+  it('Should return InvalidParamError if validation fails', async () => {
+    const { sut, emailValidatorStub } = makeSut()
+    const httpRequest = {
+      email
+    }
+    jest.spyOn(emailValidatorStub, 'isValid').mockReturnValueOnce(false)
+    const httpResponse = await sut.validate(httpRequest)
+    expect(httpResponse).toEqual(new InvalidParamError('email'))
   })
 })

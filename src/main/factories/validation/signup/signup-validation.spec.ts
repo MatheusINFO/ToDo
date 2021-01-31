@@ -1,9 +1,8 @@
-import { makeLoginValidation } from './login-validation'
-import { Validation , RequiredFieldValidation, ValidationComposite } from '@/presentation/helpers'
-import { EmailValidation } from '@/presentation/helpers/email-validation'
+import { makeSignUpValidation } from './signup-validation'
+import { Validation , RequiredFieldValidation, ValidationComposite , CompareFieldsValidation , EmailValidation } from '@/presentation/helpers'
 import { EmailValidator } from '@/presentation/protocols'
 
-jest.mock('@/presentation/helpers/validator-composite')
+jest.mock('@/presentation/helpers/validation/validator-composite')
 
 const mockEmailValidator = (): EmailValidator => {
   class EmailValidatorStub implements EmailValidator {
@@ -14,13 +13,14 @@ const mockEmailValidator = (): EmailValidator => {
   return new EmailValidatorStub()
 }
 
-describe('Login Validation', () => {
+describe('SignUp Validation', () => {
   it('Should call ValidationComposite with all validations', () => {
-    makeLoginValidation()
+    makeSignUpValidation()
     const validations: Validation[] = []
-    for (const field of ['email', 'password']) {
+    for (const field of ['name', 'email', 'password', 'passwordConfirmation']) {
       validations.push(new RequiredFieldValidation(field))
     }
+    validations.push(new CompareFieldsValidation('password', 'passwordConfirmation'))
     validations.push(new EmailValidation('email', mockEmailValidator()))
     expect(ValidationComposite).toHaveBeenCalledWith(validations)
   })

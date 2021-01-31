@@ -3,7 +3,7 @@ import { LoginController } from '@/presentation/controller/login/login-controlle
 import { DbAuthentication } from '@/data/usecases/authentication/db-authentication'
 import { BcryptAdapter, JwtAdapter } from '@/infra/cryptography'
 import { AccountMongoRepository } from '@/infra/db'
-import { makeLoginValidation } from './login-validation'
+import { makeLoginValidation } from '../validation/login/login-validation'
 
 export const makeLoginController = (): LoginController => {
   const salt = 12

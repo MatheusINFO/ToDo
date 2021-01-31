@@ -1,6 +1,6 @@
-import { InvalidParamError, MissingParamError } from '../errors'
-import { Validation } from './validation'
 import { ValidationComposite } from './validator-composite'
+import { InvalidParamError, MissingParamError } from '@/presentation/errors'
+import { Validation } from '@/presentation/helpers/validation'
 
 const mockValidation = (): Validation => {
   class ValidationStub implements Validation {

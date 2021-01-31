@@ -1,5 +1,5 @@
 import faker from 'faker'
-import { InvalidParamError } from '../errors'
+import { InvalidParamError } from '@/presentation/errors'
 import { CompareFieldsValidation } from './compare-field-validation'
 
 let field: any, fieldToCompare: any

@@ -1,8 +1,8 @@
 import { Router } from 'express'
 import { adaptRoute } from '@/main/adapter/express-router-adapter'
-import { makeAddTodoController } from '@/main/factories/add-todo'
-import { makeLoadTodoController } from '@/main/factories/load-todo'
-import { makeDeleteTodoController } from '@/main/factories/delete-todo'
+import { makeAddTodoController } from '@/main/factories/controllers/add-todo'
+import { makeLoadTodoController } from '@/main/factories/controllers/load-todo'
+import { makeDeleteTodoController } from '@/main/factories/controllers/delete-todo'
 import { adaptMiddleware } from '@/main/adapter/express-middleware-adapter'
 import { makeAuthMiddleware } from '@/main/middlewares/auth'
 

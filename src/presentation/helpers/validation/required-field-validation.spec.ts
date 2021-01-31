@@ -1,6 +1,6 @@
 import faker from 'faker'
-import { MissingParamError } from '../errors'
 import { RequiredFieldValidation } from './required-field-validation'
+import { MissingParamError } from '@/presentation/errors'
 
 let field: any
 
