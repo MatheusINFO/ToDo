@@ -8,5 +8,12 @@
         "paths": {
             "@/*": ["*"]
         }
-    }
+    },
+    "include": [
+        "src"
+    ],
+    "exclude": [
+        "**/*.spec.ts",
+        "**/*.test.ts"
+    ]
 }
