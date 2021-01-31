@@ -1,15 +1,7 @@
 import { ValidationComposite } from './validator-composite'
 import { InvalidParamError, MissingParamError } from '@/presentation/errors'
 import { Validation } from '@/presentation/helpers/validation'
-
-const mockValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-  return new ValidationStub()
-}
+import { mockValidation } from '@/presentation/mocks'
 
 interface SutTypes {
   sut: ValidationComposite

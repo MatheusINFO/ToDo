@@ -1,9 +1,6 @@
-import { DbDeleteTodo } from '@/data/usecases'
-import { TodoMongoRepository } from '@/infra/db'
 import { DeleteTodoController } from '@/presentation/controller/todo/delete-todo/delete-todo-controller'
+import { makeDbDeleteTodo } from '@/main/factories/usecase'
 
-export const makeDeleteTodoController = (): DeleteTodoController => {
-  const deleteTodoRepository = new TodoMongoRepository()
-  const dbDeleteTodo = new DbDeleteTodo(deleteTodoRepository)
-  return new DeleteTodoController(dbDeleteTodo)
+export const makeDeleteTodo = (): DeleteTodoController => {
+  return new DeleteTodoController(makeDbDeleteTodo())
 }

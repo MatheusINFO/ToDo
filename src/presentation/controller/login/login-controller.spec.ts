@@ -2,17 +2,9 @@ import faker from 'faker'
 import { LoginController } from './login-controller'
 import { badRequest, serverError, success, unauthorized, Validation } from '@/presentation/helpers'
 import { Authentication } from '@/domain/usecases'
+import { mockValidation } from '@/presentation/mocks'
 
 let email: any, password: any, token: any
-
-const mockValidation = (): Validation => {
-  class ValidationStub implements Validation {
-    validate (input: any): Error {
-      return null
-    }
-  }
-  return new ValidationStub()
-}
 
 const mockAuthentication = (): Authentication => {
   class AuthenticationStub implements Authentication {

@@ -1,9 +1,6 @@
-import { DbAddTodo } from '@/data/usecases'
-import { TodoMongoRepository } from '@/infra/db'
 import { AddTodoController } from '@/presentation/controller/todo/add-todo/add-todo-controller'
+import { makeDbAddTodo } from '@/main/factories/usecase'
 
 export const makeAddTodoController = (): AddTodoController => {
-  const addTodoRepository = new TodoMongoRepository()
-  const dbAddTodo = new DbAddTodo(addTodoRepository)
-  return new AddTodoController(dbAddTodo)
+  return new AddTodoController(makeDbAddTodo())
 }
