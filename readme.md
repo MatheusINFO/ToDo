@@ -1,6 +1,6 @@
 # **ToDo API**
 
-(./public/img/todo-logo.png "ToDo")
+![alt text](./public/img/todo-logo.png "ToDo")
 
 > ## APIs construídas no treinamento
 
