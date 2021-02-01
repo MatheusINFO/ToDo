@@ -1,9 +1,9 @@
 import faker from 'faker'
 import MockDate from 'mockdate'
-import { badRequest, serverError, success } from '@/presentation/helpers'
+import { badRequest, serverError, success, Validation } from '@/presentation/helpers'
 import { AddTodoController } from '@/presentation/controller'
-import { MissingParamError } from '@/presentation/errors'
 import { AddTodo } from '@/domain/usecases'
+import { mockValidation } from '@/tests/presentation/mocks'
 
 let id: any, accountId: any, title: any, description: any
 
@@ -26,14 +26,17 @@ const mockAddTodo = (): AddTodo => {
 type SutTypes = {
   sut: AddTodoController
   addTodoStub: AddTodo
+  validationStub: Validation
 }
 
 const makeSut = (): SutTypes => {
+  const validationStub = mockValidation()
   const addTodoStub = mockAddTodo()
-  const sut = new AddTodoController(addTodoStub)
+  const sut = new AddTodoController(addTodoStub, validationStub)
   return {
     sut,
-    addTodoStub
+    addTodoStub,
+    validationStub
   }
 }
 
@@ -53,26 +56,30 @@ describe('Add Todo Controller', () => {
     MockDate.reset()
   })
 
-  it('Should return 400 if no title is provided', async () => {
-    const { sut } = makeSut()
+  it('Shoudl call Validation with correct value', async () => {
+    const { sut, validationStub } = makeSut()
+    const validateSpy = jest.spyOn(validationStub, 'validate')
     const httpRequest = {
       body: {
+        title,
+        description
+      }
+    }
+    await sut.handle(httpRequest)
+    expect(validateSpy).toHaveBeenCalledWith(httpRequest.body)
+  })
+
+  it('Shoudl return 400 if validation returns an error', async () => {
+    const { sut, validationStub } = makeSut()
+    jest.spyOn(validationStub, 'validate').mockReturnValueOnce(new Error())
+    const httpRequest = {
+      body: {
+        title,
         description
       }
     }
     const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('title')))
-  })
-
-  it('Should return 400 if no description is provided', async () => {
-    const { sut } = makeSut()
-    const httpRequest = {
-      body: {
-        title
-      }
-    }
-    const httpResponse = await sut.handle(httpRequest)
-    expect(httpResponse).toEqual(badRequest(new MissingParamError('description')))
+    expect(httpResponse).toEqual(badRequest(new Error()))
   })
 
   it('Should call AddTodo with correct values', async () => {

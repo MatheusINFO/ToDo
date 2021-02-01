@@ -1,20 +1,18 @@
 import { Controller, HttpRequest, HttpResponse } from '@/presentation/protocols'
-import { badRequest, serverError, success } from '@/presentation/helpers'
-import { MissingParamError } from '@/presentation/errors'
+import { badRequest, serverError, success, Validation } from '@/presentation/helpers'
 import { AddTodo } from '@/domain/usecases'
 
 export class AddTodoController implements Controller {
   constructor (
-    private readonly addTodo: AddTodo
+    private readonly addTodo: AddTodo,
+    private readonly validation: Validation
   ) {}
 
   async handle (httpRequest: HttpRequest): Promise<HttpResponse> {
     try {
-      const requiredFields = ['title', 'description']
-      for (const field of requiredFields) {
-        if (!httpRequest.body[field]) {
-          return badRequest(new MissingParamError(field))
-        }
+      const error = this.validation.validate(httpRequest.body)
+      if (error) {
+        return badRequest(error)
       }
       const { title, description } = httpRequest.body
       const accountId = httpRequest.accountId
