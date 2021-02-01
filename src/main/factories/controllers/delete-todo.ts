@@ -1,4 +1,4 @@
-import { DeleteTodoController } from '@/presentation/controller/todo/delete-todo/delete-todo-controller'
+import { DeleteTodoController } from '@/presentation/controller/delete-todo-controller'
 import { makeDbDeleteTodo } from '@/main/factories/usecase'
 
 export const makeDeleteTodo = (): DeleteTodoController => {
