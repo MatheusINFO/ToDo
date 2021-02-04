@@ -5,7 +5,7 @@
 > ## Deploy no heroku:
 * https://clean-todo-api.herokuapp.com/
 
-> ## APIs construídas no treinamento
+> ## APIs construídas
 
 1. [SignUp]
 2. [Login]
