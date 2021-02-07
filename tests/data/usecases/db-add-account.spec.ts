@@ -79,7 +79,7 @@ describe('DbAddAccount Usecase', () => {
     await expect(httpRequest).rejects.toThrow()
   })
 
-  it('Should call AddAccountRepository with correct password', async () => {
+  it('Should call AddAccountRepository with correct values', async () => {
     const { sut, addAccountRepository } = makeSut()
     const httpRequest = jest.spyOn(addAccountRepository, 'add')
     const accountData = {
